@@ -1,4 +1,4 @@
-name: sparkflow-examples-kickstarter
+name: server_io 
 author: Ewetumo Alexander <trinoxf@gmail.com>
 description: provides a set of basic examples to get you started with sparkflow
 dependencies:
