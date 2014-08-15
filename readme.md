@@ -12,8 +12,8 @@
   components to using networks and the basics principles are the core of sparkflow as once they are understoo they propagate through out its use, even composed components are just components with internal networks and proxy ports that the component and network share to communicate with other components.
 
 ##Use
-  The tutorials are tagged with a Ks{number},so as to indicate how to progress but feel free to start from any point as desired,allthough i would still advice taking the first tutorial before tutorial hopping begins
-
+  The tutorials are tagged with a Ks{number},so as to indicate how to progress but feel free to start from any point as desired,allthough i would still advice taking the first tutorial before tutorial hopping begins,simple enter each tutorial folder and
+'pub install' and read the readme files for details
 
 ##Remarks
   Please send create issues with github issues,to raise suggestion for more tutorial ideas or suggestions for improvement. Thank you. God bless. (Doumo arigatou gozaimasu, Komapseomnida).
