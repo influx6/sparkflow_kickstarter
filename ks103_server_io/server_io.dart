@@ -14,13 +14,16 @@ class Server{
         r.addMutation('io/server',(e){
 
            e.makeOutport('io:req');
+           e.makeOutport('io:error');
 
            var server,port = 3001, address = '127.0.0.1';
-           HttpServer.create(addres,port).then((s){
+           HttpServer.bind(address,port).then((s){
               server = s;
               s.listen((req){
                  e.send('io:req',req);
               });
+           }).catchError((e){
+              e.send('io:error',e);
            });
         });
 
@@ -31,6 +34,7 @@ class Server{
             e.makeInport('io:fn');
 
             e.port('io:req').pause();
+
             e.tapData('io:fn',(n){
                 fn = n.data;
                 e.port('io:req').resume();
@@ -58,6 +62,7 @@ void main(){
 
   io.schedulePacket('page','io:fn',(req){
      req.response.write('Welcome to ${req.uri.path}');
+     req.response.close();
   });
 
 
