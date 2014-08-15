@@ -17,6 +17,10 @@ In these tutorial we will go with the first method as it provides a natural intr
   Ports: These are simple streams/channels which data passes through,it is asynchronous and each data passed into a port is wrapped up in a <Parket> Class Instance,which allows designation of the type of packet (i.e data packet,a begingroup packet,end group packet) and provide convenient methods to listen for
   each type of packets.
 
+
+##Running
+   Simple 'pub install' to get the dependencies and 'dart vector_basics.dart' to see the result
+
 ##Design
 
   We wil be creating the first vector component which is the addition component:
