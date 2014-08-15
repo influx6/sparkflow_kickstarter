@@ -1,0 +1,8 @@
+name: sparkflow_example_kickstarter
+version: 0.0.1
+author: Ewetumo Alexander <trinoxf@gmail.com>
+description: provides a set of basic examples to get you started with sparkflow
+homepage: http://github.com/influx6/sparkflow_kickstarter
+dependencies:
+  sparkflow: any
+  hub: any
