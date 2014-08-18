@@ -14,3 +14,6 @@
  simple dart test/server_io.dart and open th web/index.html in dartium
 
 
+##Note
+  The basics within these tutorial should already make sense to the reader has we have done major details
+ on the previous ks101_canvas_basic tutorial,please re-read that tutorial incase you miss something or suggest an improvement as an issue.
