@@ -20,7 +20,7 @@ class Server{
            e.makeOutport('io:req');
            e.makeOutport('io:error');
 
-           var server,port = 3001, address = '127.0.0.1';
+           var server,port = 8080, address = '127.0.0.1';
            HttpServer.bind(address,port).then((s){
               server = s;
               s.listen((req){

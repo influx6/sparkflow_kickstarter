@@ -11,6 +11,6 @@
 
 
 ##Running
- simple dart test/server_io.dart and open th web/index.html in dartium
+ simple dart test/server_io.dart and open the web/index.html in dartium
 
 

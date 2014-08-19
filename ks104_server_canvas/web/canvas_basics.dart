@@ -78,7 +78,7 @@ class CanvasBasics{
  void main(){
     
     var board = window.document.querySelector('#stage');
-    var socket = new WebSocket('ws://127.0.0.1:3001/ws');
+    var socket = new WebSocket('ws://127.0.0.1:8080/ws');
 
     var sendMessage = (String tag,[dynamic m]){
       if(socket != null && socket.readyState == WebSocket.OPEN){
