@@ -3358,20 +3358,22 @@ var $$ = {};
     $.get$Sparkflow_registry().createRegistry$2("canvas", new A.CanvasBasics_register_closure());
   },
   main: [function() {
-    var board, socket, canvas, t1;
-    P.print("creating socket connection!");
-    board = window.document.querySelector("#stage");
-    socket = W.WebSocket_WebSocket("ws://127.0.0.1:30001/ws", null);
+    var canvas, board, socket, t1;
     A.CanvasBasics_register();
     canvas = S.Network$("basic test", null);
     canvas.use$2("canvas/draw/canvas", "stage");
     canvas.use$2("canvas/draw/rectangle", "rect");
     canvas.ensureBinding$4("stage", "io:out", "rect", "io:canvas");
+    board = window.document.querySelector("#stage");
+    socket = W.WebSocket_WebSocket("ws://127.0.0.1:30001/ws", null);
+    P.print("creating socket connection! " + H.Primitives_objectToString(socket));
     canvas.schedulePacket$3("stage", "io:in", board);
     canvas.schedulePacket$3("rect", "io:coords", ["#C02929", 20, 20, 200, 300]);
     canvas.boot$0().then$1(N.Funcs_tagDefer(N.Funcs_identity$closure(), 1, null).call$1("booting canvas test"));
+    t1 = H.setRuntimeTypeInfo(new W._EventStream(socket, C.EventStreamProvider_error._eventType, false), [null]);
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
     t1 = H.setRuntimeTypeInfo(new W._EventStream(socket, C.EventStreamProvider_message._eventType, false), [null]);
-    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure(new A.main_closure0(socket), canvas)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure0(canvas, new A.main_closure1(socket))), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
   }, "call$0", "main$closure", 0, 0, 12],
   CanvasBasics_register_closure: {
     "^": "Closure:32;",
@@ -3464,12 +3466,14 @@ var $$ = {};
       P.print("got coord " + H.S(n));
       cd = J.get$data$x(n);
       t1 = this.box_1;
+      t1.context_2.save();
       t2 = J.getInterceptor$asx(cd);
       t1.context_2.fillStyle = t2.$index(cd, 0);
       t1.context_2.fillRect(t2.$index(cd, 1), t2.$index(cd, 2), t2.$index(cd, 3), t2.$index(cd, 4));
+      t1.context_2.restore();
     }, "call$1", null, 2, 0, null, 33, "call"]
   },
-  main_closure0: {
+  main_closure1: {
     "^": "Closure:51;socket_0",
     call$2: function(tag, m) {
       if (this.socket_0.readyState === 1)
@@ -3481,7 +3485,13 @@ var $$ = {};
     }
   },
   main_closure: {
-    "^": "Closure:32;sendMessage_1,canvas_2",
+    "^": "Closure:32;",
+    call$1: [function(e) {
+      P.print("socket error occured " + H.S(e));
+    }, "call$1", null, 2, 0, null, 1, "call"]
+  },
+  main_closure0: {
+    "^": "Closure:32;canvas_1,sendMessage_2",
     call$1: [function(e) {
       var pack, t1, message, t2;
       pack = C.JsonCodec_null_null.decode$1(J.get$data$x(e));
@@ -3489,11 +3499,11 @@ var $$ = {};
       message = t1.$index(pack, "message");
       t2 = J.getInterceptor(message);
       if (t2.$eq(message, 100))
-        this.sendMessage_1.call$1("ping");
+        this.sendMessage_2.call$1("ping");
       if (t2.$eq(message, "pong"))
-        this.sendMessage_1.call$1("go");
+        this.sendMessage_2.call$1("go");
       if (t2.$eq(message, "draw"))
-        this.canvas_2.schedulePacket$3("rect", "io:coords", t1.$index(pack, "data"));
+        this.canvas_1.schedulePacket$3("rect", "io:coords", t1.$index(pack, "data"));
       P.print("got new message from server " + H.S(pack));
     }, "call$1", null, 2, 0, null, 1, "call"]
   }
@@ -7501,7 +7511,7 @@ var $$ = {};
   },
   Event: {
     "^": "Interceptor;",
-    "%": "AudioProcessingEvent|AutocompleteErrorEvent|BeforeLoadEvent|BeforeUnloadEvent|CSSFontFaceLoadEvent|CloseEvent|CustomEvent|DeviceMotionEvent|DeviceOrientationEvent|HashChangeEvent|IDBVersionChangeEvent|InstallEvent|InstallPhaseEvent|MediaKeyEvent|MediaKeyMessageEvent|MediaKeyNeededEvent|MediaStreamEvent|MediaStreamTrackEvent|MutationEvent|OfflineAudioCompletionEvent|OverflowEvent|PageTransitionEvent|PopStateEvent|ProgressEvent|RTCDTMFToneChangeEvent|RTCDataChannelEvent|RTCIceCandidateEvent|ResourceProgressEvent|SecurityPolicyViolationEvent|SpeechInputEvent|SpeechRecognitionEvent|SpeechSynthesisEvent|StorageEvent|TrackEvent|TransitionEvent|WebGLContextEvent|WebKitAnimationEvent|WebKitTransitionEvent|XMLHttpRequestProgressEvent;Event"
+    "%": "AudioProcessingEvent|AutocompleteErrorEvent|BeforeLoadEvent|BeforeUnloadEvent|CSSFontFaceLoadEvent|CloseEvent|CustomEvent|DeviceMotionEvent|DeviceOrientationEvent|HashChangeEvent|IDBVersionChangeEvent|InstallEvent|InstallPhaseEvent|MediaKeyEvent|MediaKeyMessageEvent|MediaKeyNeededEvent|MediaStreamEvent|MediaStreamTrackEvent|MutationEvent|OfflineAudioCompletionEvent|OverflowEvent|PageTransitionEvent|PopStateEvent|ProgressEvent|RTCDTMFToneChangeEvent|RTCDataChannelEvent|RTCIceCandidateEvent|ResourceProgressEvent|SecurityPolicyViolationEvent|SpeechInputEvent|SpeechRecognitionEvent|SpeechSynthesisEvent|StorageEvent|TrackEvent|TransitionEvent|WebGLContextEvent|WebKitAnimationEvent|WebKitTransitionEvent|XMLHttpRequestProgressEvent;Event|InputEvent"
   },
   EventTarget: {
     "^": "Interceptor;",
@@ -12542,6 +12552,7 @@ P.Duration.$isObject = true;
 P.Object.$isObject = true;
 F.dsGraphNode.$isdsGraphNode = true;
 F.dsGraphNode.$isObject = true;
+W.Event.$isObject = true;
 W.MessageEvent.$isObject = true;
 P.List.$isList = true;
 P.List.$isObject = true;
@@ -12817,6 +12828,7 @@ C.C__DelayedDone = new P._DelayedDone();
 C.C__JSRandom = new P._JSRandom();
 C.C__RootZone = new P._RootZone();
 C.Duration_0 = new P.Duration(0);
+C.EventStreamProvider_error = new W.EventStreamProvider("error");
 C.EventStreamProvider_message = new W.EventStreamProvider("message");
 C.JS_CONST_0 = function(hooks) {
   if (typeof dartExperimentalFixupGetTag != "function") return hooks;

@@ -11981,7 +11981,7 @@ class ErrorEvent extends Event native "ErrorEvent" {
 
 
 @DomName('Event')
-class Event extends Interceptor native "Event" {
+class Event extends Interceptor native "Event,InputEvent" {
   // In JS, canBubble and cancelable are technically required parameters to
   // init*Event. In practice, though, if they aren't provided they simply
   // default to false (since that's Boolean(undefined)).
@@ -23344,7 +23344,8 @@ class ShadowRoot extends DocumentFragment native "ShadowRoot" {
   Selection getSelection() native;
 
   static bool get supported =>
-      JS('bool', '!!(Element.prototype.webkitCreateShadowRoot)');
+      JS('bool', '!!(Element.prototype.createShadowRoot||'
+                 'Element.prototype.webkitCreateShadowRoot)');
 
   static bool _shadowRootDeprecationReported = false;
   static void _shadowRootDeprecationReport() {

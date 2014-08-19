@@ -39,7 +39,9 @@ class CanvasBasics{
 
         r.addMutation('draw/rectangle',(shell){
 
-            var canvas,context;
+            CanvasElement canvas;
+            CanvasRenderingContext2D context;
+            
             shell.makeInport('io:canvas');
             shell.makeInport('io:coords');
 
@@ -62,10 +64,10 @@ class CanvasBasics{
             shell.tapData('io:coords',(n){
                print('got coord $n');
                 var cd = n.data;
-                /*context.save();*/
+                context.save();
                 context.fillStyle = cd[0];
                 context.fillRect(cd[1],cd[2],cd[3],cd[4]);
-                /*context.restore();*/
+                context.restore();
             });
 
         });
@@ -76,19 +78,7 @@ class CanvasBasics{
 
 
  void main(){
-    
-   print('creating socket connection!');
-    var board = window.document.querySelector('#stage');
-    var socket = new WebSocket('ws://127.0.0.1:30001/ws');
-
-    var sendMessage = (String tag,[dynamic m]){
-      if(socket != null && socket.readyState == WebSocket.OPEN){
-        return socket.send(JSON.encode({'message': tag, 'data': m}));
-      }
-      print('WebSocket not ready or error in connection');
-    };
-
-    
+        
      CanvasBasics.register();
      var canvas = Network.create('basic test');
      canvas.use('canvas/draw/canvas','stage');
@@ -96,11 +86,27 @@ class CanvasBasics{
 
      canvas.ensureBinding('stage','io:out','rect','io:canvas');
 
+      var board = window.document.querySelector('#stage');
+      var socket = new WebSocket('ws://127.0.0.1:30001/ws');
+      print('creating socket connection! $socket'); 
+
+      var sendMessage = (String tag,[dynamic m]){
+        if(socket != null && socket.readyState == WebSocket.OPEN){
+          return socket.send(JSON.encode({'message': tag, 'data': m}));
+        }
+        print('WebSocket not ready or error in connection');
+      };
+      
      canvas.schedulePacket('stage','io:in',board);
      canvas.schedulePacket('rect','io:coords',['#C02929',20,20,200,300]);
 
      canvas.boot().then(Funcs.tag('booting canvas test'));
 
+     socket.onError.listen((e){
+       print('socket error occured $e');
+       
+     });
+     
      socket.onMessage.listen((e){
         var pack = JSON.decode(e.data);
         var message = pack['message'];
