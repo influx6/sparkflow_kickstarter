@@ -22,8 +22,8 @@ class Server{
               s.listen((req){
                  e.send('io:req',req);
               });
-           }).catchError((e){
-              e.send('io:error',e);
+           }).catchError((f){
+              e.send('io:error',f);
            });
         });
 
@@ -66,6 +66,8 @@ void main(){
   });
 
 
-  io.boot().then(Funcs.tag('booting io servo'));
+  var booted = io.boot();
+  var printer = Funcs.tag('booting io servo');
+  booted.then(printer);
 
 }
